@@ -44,6 +44,63 @@ module.exports = bitmate.Base.extend({
         }
       }
 
+      if (this.options.client !== 'angular2' && this.options.js === 'typescript') {
+        _.merge(pkg, {
+          devDependencies: {
+            'karma-es6-shim': '^1.0.0'
+          }
+        });
+      }
+
+      if (this.options.client === 'angular2') {
+        _.merge(pkg, {
+          devDependencies: {
+            'karma-chrome-launcher': '^0.2.3'
+          }
+        });
+
+        if (this.options.modules === 'systemjs') {
+          _.merge(pkg, {
+            devDependencies: {
+              glob: '^7.0.3'
+            }
+          });
+        }
+      } else {
+        _.merge(pkg, {
+          devDependencies: {
+            'karma-phantomjs-launcher': '^1.0.0',
+            'karma-phantomjs-shim': '^1.1.2',
+            'phantomjs-prebuilt': '^2.1.6'
+          }
+        });
+      }
+
+      if (this.options.modules === 'webpack') {
+        _.merge(pkg, {
+          devDependencies: {
+            'babel-plugin-istanbul': '^2.0.1',
+            'karma-webpack': '^1.7.0'
+          }
+        });
+      }
+
+      if (this.options.modules === 'systemjs') {
+        _.merge(pkg, {
+          devDependencies: {
+            'karma-jspm': '^2.0.2'
+          }
+        });
+
+        if (this.options.client === 'angular1' && this.options.js === 'typescript') {
+          _.merge(pkg, {
+            devDependencies: {
+              'karma-generic-preprocessor': '^1.1.0'
+            }
+          });
+        }
+      }
+
       this.mergeJson('package.json', pkg);
     },
 

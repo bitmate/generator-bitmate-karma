@@ -34,13 +34,14 @@ test.beforeEach(() => {
   context.mergeJson['package.json'] = {};
 });
 
-test('Configure package.json  with angular1/bower', t => {
+test('Configure package.json  with angular1/bower/typescript', t => {
   const expected = _.merge({}, pkg, {
     devDependencies: {
       'angular-mocks': '^1.5.0-beta.2',
       'gulp-ng-annotate': '^1.1.0',
       'karma-angular-filesort': '^1.0.0',
-      'karma-ng-html2js-preprocessor': '^0.2.0'
+      'karma-ng-html2js-preprocessor': '^0.2.0',
+      "karma-es6-shim": "^1.0.0"
     },
     eslintConfig: {
       globals: {
@@ -48,7 +49,27 @@ test('Configure package.json  with angular1/bower', t => {
       }
     }
   });
-  TestUtils.call(context, 'configuring.pkg', {client: 'angular1', modules: 'bower'});
+  TestUtils.call(context, 'configuring.pkg', {client: 'angular1', modules: 'bower', js: 'typescript'});
+  t.deepEqual(context.mergeJson['package.json'], expected);
+});
+
+test('Configure package.json  with angular1/systemjs/typescript', t => {
+  const expected = _.merge({}, pkg, {
+    devDependencies: {
+      'angular-mocks': '^1.5.0-beta.2',
+      'gulp-ng-annotate': '^1.1.0',
+      'karma-ng-html2js-preprocessor': '^0.2.0',
+      "karma-es6-shim": "^1.0.0",
+      'karma-jspm': '^2.0.2',
+      'karma-generic-preprocessor': '^1.1.0'
+    },
+    eslintConfig: {
+      globals: {
+        expect: true
+      }
+    }
+  });
+  TestUtils.call(context, 'configuring.pkg', {client: 'angular1', modules: 'systemjs', js: 'typescript'});
   t.deepEqual(context.mergeJson['package.json'], expected);
 });
 
@@ -57,7 +78,10 @@ test('Configure package.json  with angular1/webpack', t => {
     devDependencies: {
       'angular-mocks': '^1.5.0-beta.2',
       'gulp-ng-annotate': '^1.1.0',
-      'karma-ng-html2js-preprocessor': '^0.2.0'
+      'karma-ng-html2js-preprocessor': '^0.2.0',
+      "babel-plugin-istanbul": "^2.0.1",
+      "karma-webpack": "^1.7.0",
+      "karma-es6-shim": "^1.0.0"
     },
     eslintConfig: {
       globals: {
@@ -66,6 +90,30 @@ test('Configure package.json  with angular1/webpack', t => {
     }
   });
   TestUtils.call(context, 'configuring.pkg', {client: 'angular1', modules: 'webpack'});
+  t.deepEqual(context.mergeJson['package.json'], expected);
+});
+
+test('Configure package.json  with angular2/systemjs/typescript', t => {
+  const expected = _.merge({}, pkg, {
+    devDependencies: {
+      'karma-chrome-launcher': '^0.2.3',
+      'glob': '^7.0.3',
+      'karma-jspm': '^2.0.2'
+    }
+  });
+  TestUtils.call(context, 'configuring.pkg', {client: 'angular2', modules: 'systemjs', js: 'typescript'});
+  t.deepEqual(context.mergeJson['package.json'], expected);
+});
+
+test('Configure package.json  with angular2/webpack/typescript', t => {
+  const expected = _.merge({}, pkg, {
+    devDependencies: {
+      'karma-chrome-launcher': '^0.2.3',
+      "babel-plugin-istanbul": "^2.0.1",
+      'karma-webpack': '^1.7.0'
+    }
+  });
+  TestUtils.call(context, 'configuring.pkg', {client: 'angular2', modules: 'webpack', js: 'typescript'});
   t.deepEqual(context.mergeJson['package.json'], expected);
 });
 
@@ -81,7 +129,11 @@ test('gulp(): Call this.fs.copyTpl once', () => {
 
 test('Configure package.json  with react/webpack', t => {
   const expected = _.merge({}, pkg, {
-    devDependencies: {}
+    devDependencies: {
+      "babel-plugin-istanbul": "^2.0.1",
+      "karma-webpack": "^1.7.0",
+      "karma-es6-shim": "^1.0.0"
+    }
   });
   TestUtils.call(context, 'configuring.pkg', {client: 'react', modules: 'webpack'});
   t.deepEqual(context.mergeJson['package.json'], expected);

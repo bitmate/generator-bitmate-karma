@@ -3,6 +3,11 @@ const wiredep = require('wiredep');
 
 module.exports = function listFiles() {
   const wiredepOptions = Object.assign({}, conf.wiredep, {
+<% if (client === 'react') { -%>
+    overrides: {
+      react: {main: ['react-with-addons.js', 'react-dom.js']}
+    },
+<% } -%>
     dependencies: true,
     devDependencies: true
   });
@@ -11,6 +16,8 @@ module.exports = function listFiles() {
 <% if (client === 'angular1') { -%>
     conf.path.tmp('**/*.js'),
     conf.path.client('**/*.html')
+<% } else if(client === 'react') { -%>
+    conf.path.tmp('app/main/**/*.js')
 <% } -%>
   ]);
 
