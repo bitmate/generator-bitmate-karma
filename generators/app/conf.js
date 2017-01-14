@@ -13,6 +13,7 @@ module.exports = function karmaConf(options) {
 
   conf.browsers = ['PhantomJS'];
 
+  const pathSrcJs = lit`conf.path.client('index.spec.js')`;
   const pathSrcHtml = lit`conf.path.client('**/*.html')`;
 
   if (options.modules === 'bower' && options.client === 'angular1') {
@@ -25,12 +26,27 @@ module.exports = function karmaConf(options) {
     conf.frameworks.push('es6-shim');
   }
 
+  if (options.modules === 'webpack') {
+    conf.files = [
+      'node_modules/es6-shim/es6-shim.js',
+      pathSrcJs
+    ];
+
+    if (options.client === 'angular1') {
+      conf.files.push(pathSrcHtml);
+    }
+  }
+
   if (options.modules === 'bower') {
     conf.files = lit`listFiles()`;
   }
 
   if (options.modules === 'webpack' || options.client === 'angular1') {
     conf.preprocessors = {};
+  }
+
+  if (options.modules === 'webpack') {
+    conf.preprocessors[pathSrcJs] = ['webpack'];
   }
 
   if (options.client === 'angular1') {
@@ -52,6 +68,16 @@ module.exports = function karmaConf(options) {
     }
   }
 
+  if (options.modules === 'webpack') {
+    conf.reporters = lit`['progress', 'coverage']`;
+    conf.coverageReporter = {
+      type: 'html',
+      dir: 'coverage/'
+    };
+    conf.webpack = lit`require('./webpack-test.conf')`;
+    conf.webpackMiddleware = {noInfo: true};
+  }
+
   conf.plugins = [
     lit`require('karma-jasmine')`,
     lit`require('karma-junit-reporter')`,
@@ -63,6 +89,9 @@ module.exports = function karmaConf(options) {
 
   if (options.client === 'angular1') {
     conf.plugins.push(lit`require('karma-ng-html2js-preprocessor')`);
+  }
+  if (options.modules === 'webpack') {
+    conf.plugins.push(lit`require('karma-webpack')`);
   }
   if (options.modules === 'bower' && options.client === 'angular1') {
     conf.plugins.push(lit`require('karma-angular-filesort')`);

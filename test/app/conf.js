@@ -83,3 +83,73 @@ test('karmaConf with angular1/systemjs/typescript', t => {
   const result = karmaConf(options);
   t.deepEqual(result, expected);
 });
+
+test('karmaConf with angular1/webpack/babel', t => {
+  const options = {client: 'angular1', modules: 'webpack', js: 'babel', singleRun: true};
+  const expected = merge([{}, base(options), {
+    browsers: ['PhantomJS'],
+    files: [
+      'node_modules/es6-shim/es6-shim.js',
+      `lit>>conf.path.client('index.spec.js')<<lit`,
+      `lit>>conf.path.client('**/*.html')<<lit`
+    ],
+    frameworks: ['jasmine'],
+    preprocessors: {
+      [`lit>>conf.path.client('index.spec.js')<<lit`]: ['webpack'],
+      [`lit>>conf.path.client('**/*.html')<<lit`]: ['ng-html2js']
+    },
+    ngHtml2JsPreprocessor: {
+      stripPrefix: `lit>>\`\${conf.paths.client}/\`<<lit`
+    },
+    reporters: `lit>>['progress', 'coverage']<<lit`,
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
+    },
+    webpack: `lit>>require('./webpack-test.conf')<<lit`,
+    webpackMiddleware: {noInfo: true},
+    plugins: [
+      `lit>>require('karma-jasmine')<<lit`,
+      `lit>>require('karma-junit-reporter')<<lit`,
+      `lit>>require('karma-coverage')<<lit`,
+      `lit>>require('karma-phantomjs-launcher')<<lit`,
+      `lit>>require('karma-phantomjs-shim')<<lit`,
+      `lit>>require('karma-ng-html2js-preprocessor')<<lit`,
+      `lit>>require('karma-webpack')<<lit`
+    ]
+  }]);
+  const result = karmaConf(options);
+  t.deepEqual(result, expected);
+});
+
+test('karmaConf with react/webpack/babel', t => {
+  const options = {client: 'react', modules: 'webpack', js: 'babel', singleRun: true};
+  const expected = merge([{}, base(options), {
+    browsers: ['PhantomJS'],
+    frameworks: ['jasmine'],
+    files: [
+      'node_modules/es6-shim/es6-shim.js',
+      `lit>>conf.path.client('index.spec.js')<<lit`
+    ],
+    preprocessors: {
+      [`lit>>conf.path.client('index.spec.js')<<lit`]: ['webpack']
+    },
+    reporters: `lit>>['progress', 'coverage']<<lit`,
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
+    },
+    webpack: `lit>>require('./webpack-test.conf')<<lit`,
+    webpackMiddleware: {noInfo: true},
+    plugins: [
+      `lit>>require('karma-jasmine')<<lit`,
+      `lit>>require('karma-junit-reporter')<<lit`,
+      `lit>>require('karma-coverage')<<lit`,
+      `lit>>require('karma-phantomjs-launcher')<<lit`,
+      `lit>>require('karma-phantomjs-shim')<<lit`,
+      `lit>>require('karma-webpack')<<lit`
+    ]
+  }]);
+  const result = karmaConf(options);
+  t.deepEqual(result, expected);
+});

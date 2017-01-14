@@ -128,6 +128,17 @@ module.exports = bitmate.Base.extend({
         this.destinationPath('gulp_tasks'),
         {modules: this.options.modules}
       );
+    },
+
+    client() {
+      if (this.options.modules === 'webpack') {
+        this.fs.copyTpl(
+          this.templatePath('client/index.spec.js'),
+          this.destinationPath('client/index.spec.js'),
+          {client: this.options.client, js: this.options.js}
+        );
+      }
     }
   }
+
 });

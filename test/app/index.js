@@ -161,3 +161,23 @@ test('gulp(): Call this.fs.copyTpl once', () => {
   TestUtils.call(context, 'writing.gulp');
   expect(spy).to.have.been.called.once();
 });
+
+test('client(): Call this.fs.copyTpl once when modules is webpack', () => {
+  context.templatePath = context.destinationPath = path => path;
+  context.fs = {
+    copyTpl: () => {}
+  };
+  const spy = chai.spy.on(context.fs, 'copyTpl');
+  TestUtils.call(context, 'writing.client', {modules: 'webpack'});
+  expect(spy).to.have.been.called.once();
+});
+
+test('client(): Call this.fs.copyTpl once when modules is bower', () => {
+  context.templatePath = context.destinationPath = path => path;
+  context.fs = {
+    copyTpl: () => {}
+  };
+  const spy = chai.spy.on(context.fs, 'copyTpl');
+  TestUtils.call(context, 'writing.client', {modules: 'bower'});
+  spy.should.have.not.been.called();
+});

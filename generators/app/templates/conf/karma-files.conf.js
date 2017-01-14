@@ -17,7 +17,7 @@ module.exports = function listFiles() {
     conf.path.tmp('**/*.js'),
     conf.path.client('**/*.html')
 <% } else if(client === 'react') { -%>
-    conf.path.tmp('app/main/**/*.js')
+    conf.path.tmp('app/**/*.js')
 <% } -%>
   ]);
 
