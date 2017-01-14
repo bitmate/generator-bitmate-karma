@@ -90,8 +90,7 @@ test('karmaConf with angular1/webpack/babel', t => {
     browsers: ['PhantomJS'],
     files: [
       'node_modules/es6-shim/es6-shim.js',
-      `lit>>conf.path.client('index.spec.js')<<lit`,
-      `lit>>conf.path.client('**/*.html')<<lit`
+      `lit>>conf.path.client('index.spec.js')<<lit`
     ],
     frameworks: ['jasmine'],
     preprocessors: {

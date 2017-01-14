@@ -31,10 +31,6 @@ module.exports = function karmaConf(options) {
       'node_modules/es6-shim/es6-shim.js',
       pathSrcJs
     ];
-
-    if (options.client === 'angular1') {
-      conf.files.push(pathSrcHtml);
-    }
   }
 
   if (options.modules === 'bower') {
