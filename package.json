@@ -10,7 +10,7 @@
   "author": "BitMate",
   "main": "index.js",
   "dependencies": {
-    "bitmate-generator": "../bitmate-generator",
+    "bitmate-generator": "^1.0.0",
     "lodash": "^4.9.0"
   },
   "devDependencies": {
@@ -49,5 +49,7 @@
     "extends": "xo-space/esnext"
   },
   "license": "UNLICENSED",
-  "private": true
+  "publishConfig": {
+    "registry": "http://sinopia.bitmate.io/"
+  }
 }
