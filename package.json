@@ -1,6 +1,6 @@
 {
   "name": "@oligibson/generator-bitmate-karma",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "BitMate generator for handling Karma config",
   "homepage": "http://bitmate.io/",
   "repository": {
@@ -10,7 +10,7 @@
   "author": "BitMate",
   "main": "index.js",
   "dependencies": {
-    "@oligibson/bitmate-generator": "^1.0.0",
+    "@oligibson/bitmate-generator": "^1.0.4",
     "lodash": "^4.9.0"
   },
   "devDependencies": {
