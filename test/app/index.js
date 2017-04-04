@@ -5,7 +5,7 @@ const should = chai.should(); // eslint-disable-line no-unused-vars
 chai.use(spies);
 const _ = require('lodash');
 const test = require('ava');
-const TestUtils = require('bitmate-generator').TestUtils;
+const TestUtils = require('@oligibson/bitmate-generator').TestUtils;
 
 let context;
 const pkg = {

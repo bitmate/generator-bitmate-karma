@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const bitmate = require('bitmate-generator');
+const bitmate = require('@oligibson/bitmate-generator');
 const conf = require('./conf');
 
 module.exports = bitmate.Base.extend({

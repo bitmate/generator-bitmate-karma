@@ -1,5 +1,5 @@
 {
-  "name": "generator-bitmate-karma",
+  "name": "@oligibson/generator-bitmate-karma",
   "version": "1.0.2",
   "description": "BitMate generator for handling Karma config",
   "homepage": "http://bitmate.io/",
@@ -10,7 +10,7 @@
   "author": "BitMate",
   "main": "index.js",
   "dependencies": {
-    "bitmate-generator": "^1.0.2",
+    "@oligibson/bitmate-generator": "^1.0.0",
     "lodash": "^4.9.0"
   },
   "devDependencies": {
@@ -48,8 +48,5 @@
   "eslintConfig": {
     "extends": "xo-space/esnext"
   },
-  "license": "UNLICENSED",
-  "publishConfig": {
-    "registry": "http://sinopia.bitmate.io/"
-  }
+  "license": "UNLICENSED"
 }
