@@ -2,7 +2,7 @@
 
 const lit = require('@oligibson/bitmate-generator').lit;
 
-module.exports = function karmaConf(options) {
+module.exports = function (options) {
   const conf = {
     basePath: '../',
     singleRun: options.singleRun,
@@ -11,7 +11,11 @@ module.exports = function karmaConf(options) {
     junitReporter: {outputDir: 'test-reports'}
   };
 
-  conf.browsers = ['PhantomJS'];
+  if (options.client === 'angular2') {
+    conf.browsers = ['Chrome'];
+  } else {
+    conf.browsers = ['PhantomJS'];
+  }
 
   const pathSrcJs = lit`conf.path.client('index.spec.js')`;
   const pathSrcHtml = lit`conf.path.client('**/*.html')`;
@@ -80,17 +84,29 @@ module.exports = function karmaConf(options) {
     lit`require('karma-coverage')`
   ];
 
-  conf.plugins.push(lit`require('karma-phantomjs-launcher')`);
-  conf.plugins.push(lit`require('karma-phantomjs-shim')`);
-
+  if (options.client === 'angular2') {
+    conf.plugins.push(lit`require('karma-chrome-launcher')`);
+  } else {
+    conf.plugins.push(lit`require('karma-phantomjs-launcher')`);
+    conf.plugins.push(lit`require('karma-phantomjs-shim')`);
+  }
   if (options.client === 'angular1') {
     conf.plugins.push(lit`require('karma-ng-html2js-preprocessor')`);
   }
   if (options.modules === 'webpack') {
     conf.plugins.push(lit`require('karma-webpack')`);
   }
+  if (options.modules === 'systemjs') {
+    conf.plugins.push(lit`require('karma-jspm')`);
+  }
   if (options.modules === 'bower' && options.client === 'angular1') {
     conf.plugins.push(lit`require('karma-angular-filesort')`);
+  }
+  if (options.modules === 'systemjs' && options.client === 'angular1' && options.js === 'typescript') {
+    conf.plugins.push(lit`require('karma-generic-preprocessor')`);
+  }
+  if (options.client !== 'angular2' && options.js === 'typescript') {
+    conf.plugins.push(lit`require('karma-es6-shim')`);
   }
 
   return conf;

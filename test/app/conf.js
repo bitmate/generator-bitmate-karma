@@ -77,7 +77,10 @@ test('karmaConf with angular1/systemjs/typescript', t => {
       `lit>>require('karma-coverage')<<lit`,
       `lit>>require('karma-phantomjs-launcher')<<lit`,
       `lit>>require('karma-phantomjs-shim')<<lit`,
-      `lit>>require('karma-ng-html2js-preprocessor')<<lit`
+      `lit>>require('karma-ng-html2js-preprocessor')<<lit`,
+      `lit>>require('karma-jspm')<<lit`,
+      `lit>>require('karma-generic-preprocessor')<<lit`,
+      `lit>>require('karma-es6-shim')<<lit`
     ]
   }]);
   const result = karmaConf(options);
@@ -116,6 +119,17 @@ test('karmaConf with angular1/webpack/babel', t => {
       `lit>>require('karma-ng-html2js-preprocessor')<<lit`,
       `lit>>require('karma-webpack')<<lit`
     ]
+  }]);
+  const result = karmaConf(options);
+  t.deepEqual(result, expected);
+});
+
+test('karmaConf with angular2/systemjs/babel', t => {
+  const options = {client: 'angular2', modules: 'systemjs', js: 'babel', singleRun: true};
+  const expected = merge([{}, base(options), {
+    browsers: ['Chrome'],
+    frameworks: ['jasmine'],
+    plugins: [`lit>>require('karma-chrome-launcher')<<lit`, `lit>>require('karma-jspm')<<lit`]
   }]);
   const result = karmaConf(options);
   t.deepEqual(result, expected);
